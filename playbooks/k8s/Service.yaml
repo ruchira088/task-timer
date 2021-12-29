@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-timer-service
+  namespace: {{ namespace }}
+spec:
+  selector:
+    app: task-timer
+    branch: {{ git_branch }}
+  ports:
+    - name: http4s-port
+      port: 8000

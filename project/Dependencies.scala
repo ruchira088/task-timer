@@ -27,6 +27,8 @@ object Dependencies
 
   lazy val flyway = "org.flywaydb" % "flyway-core" % "8.3.0"
 
+  lazy val enumeratum = "com.beachape" %% "enumeratum" % "1.7.0"
+
   lazy val bcrypt = "org.mindrot" % "jbcrypt" % "0.4"
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.10.13"

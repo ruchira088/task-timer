@@ -1,6 +1,8 @@
 package com.ruchij.config
 
 import cats.effect.IO
+import com.ruchij.dao.providers.Database
+import com.ruchij.services.user.models.Password
 import com.ruchij.test.utils.IOUtils.{IOErrorOps, runIO}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.flatspec.AnyFlatSpec
@@ -21,6 +23,20 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
             port = $${?HTTP_PORT}
           }
 
+          database-configuration {
+            database = "RDBMS"
+            database = $${?DATABASE_TYPE}
+
+            url = "jdbc:h2:mem:task-timer;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false"
+            url = $${?DATABASE_URL}
+
+            user = "my-user"
+            user = $${?DATABASE_USER}
+
+            password = "Passw0rd"
+            password = $${?DATABASE_PASSWORD}
+          }
+
           build-information {
             git-branch = "my-branch"
 
@@ -37,6 +53,8 @@ class ServiceConfigurationSpec extends AnyFlatSpec with Matchers {
           serviceConfiguration.httpConfiguration mustBe HttpConfiguration("127.0.0.1", 80)
           serviceConfiguration.buildInformation mustBe
             BuildInformation(Some("my-branch"), None, Some(new DateTime(2021, 7, 31, 10, 10, 0, 0, DateTimeZone.UTC)))
+          serviceConfiguration.databaseConfiguration mustBe
+            DatabaseConfiguration(Database.RDBMS, "jdbc:h2:mem:task-timer;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false", "my-user", Password("Passw0rd"))
         }
     }
   }

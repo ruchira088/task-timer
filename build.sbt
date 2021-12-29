@@ -40,6 +40,7 @@ lazy val rootDependencies =
     doobieHikari,
     h2,
     flyway,
+    enumeratum,
     bcrypt,
     pureconfig,
     logbackClassic,

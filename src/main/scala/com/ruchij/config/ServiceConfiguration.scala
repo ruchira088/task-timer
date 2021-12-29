@@ -2,7 +2,7 @@ package com.ruchij.config
 
 import cats.ApplicativeError
 import com.ruchij.types.FunctionKTypes._
-import com.ruchij.config.ConfigReaders.dateTimeConfigReader
+import com.ruchij.config.ConfigReaders._
 import pureconfig.ConfigObjectSource
 import pureconfig.error.ConfigReaderException
 import pureconfig.generic.auto._

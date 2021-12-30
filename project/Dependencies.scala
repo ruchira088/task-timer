@@ -25,6 +25,8 @@ object Dependencies
 
   lazy val h2 = "com.h2database" % "h2" % "2.0.204"
 
+  lazy val postgresql = "org.postgresql" % "postgresql" % "42.3.1"
+
   lazy val flyway = "org.flywaydb" % "flyway-core" % "8.3.0"
 
   lazy val enumeratum = "com.beachape" %% "enumeratum" % "1.7.0"

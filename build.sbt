@@ -39,6 +39,7 @@ lazy val rootDependencies =
     doobieCore,
     doobieHikari,
     h2,
+    postgresql,
     flyway,
     enumeratum,
     bcrypt,

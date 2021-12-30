@@ -3,18 +3,27 @@ version: "3.8"
 services:
 
   task-timer:
-#    build: .
     image: task-timer:latest
+    depends_on:
+      postgresql:
+        condition: service_healthy
     ports:
       - 8000:8000
-#      - 5005:5005
-    volumes:
-      - "./src/main/resources/logback.xml:/opt/data/logback.xml"
-#      - "~/.sbt:/root/.sbt"
-#      - "~/Library/Caches/Coursier:/root/.cache/coursier" # MacOS Coursier cache
-#      #      - "~/.cache/coursier:/root/.cache/coursier" # Linux Coursier cache
-#      #      - "~/AppData/Local/Coursier/Cache:/root/.cache/coursier" # Windows Coursier cache
-#      - ".:/opt/task-timer"
-#      - "/opt/task-timer/target"
-#      - "/opt/task-timer/project/target"
-#      - "/root/.sbt/1.0/plugins"
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgresql:5432/task-timer
+      DATABASE_USER: admin
+      DATABASE_PASSWORD: password
+
+  postgresql:
+    image: postgres
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d task-timer" ]
+      start_period: 5s
+      interval: 5s
+      timeout: 2s
+    environment:
+      POSTGRES_DB: task-timer
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password

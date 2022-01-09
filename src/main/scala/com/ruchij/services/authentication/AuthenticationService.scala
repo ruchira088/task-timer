@@ -5,10 +5,17 @@ import com.ruchij.services.authentication.models.{AuthContext, AuthenticationTok
 import com.ruchij.services.authentication.models.AuthenticationToken.AuthSecret
 import com.ruchij.services.user.models.Password
 
+import scala.concurrent.duration.{DurationInt, FiniteDuration}
+import scala.language.postfixOps
+
 trait AuthenticationService[F[_]] {
   def login(email: Email, password: Password): F[AuthenticationToken]
 
   def authenticate(secret: AuthSecret): F[AuthContext]
 
   def logout(secret: AuthSecret): F[User]
+}
+
+object AuthenticationService {
+  val SessionDuration: FiniteDuration = 1 hour
 }

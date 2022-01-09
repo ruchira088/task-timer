@@ -6,4 +6,6 @@ trait UserDao[F[_]] {
   def insert(user: User): F[Int]
 
   def findByEmail(email: Email): F[Option[User]]
+
+  def findByUserId(userId: String): F[Option[User]]
 }

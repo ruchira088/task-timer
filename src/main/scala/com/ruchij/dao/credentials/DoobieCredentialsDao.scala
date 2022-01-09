@@ -8,6 +8,8 @@ import doobie.implicits.toSqlInterpolator
 
 object DoobieCredentialsDao extends CredentialsDao[ConnectionIO] {
 
+  val SelectQuery = fr"SELECT user_id, created_at, hashed_password"
+
   override def insert(credentials: Credentials): ConnectionIO[Int] =
     sql"""
       INSERT INTO credentials (user_id, created_at, hashed_password)
@@ -16,4 +18,7 @@ object DoobieCredentialsDao extends CredentialsDao[ConnectionIO] {
       .update
       .run
       .single
+
+  override def findByUserId(userId: String): ConnectionIO[Option[Credentials]] =
+    (SelectQuery ++ fr"WHERE user_id = $userId").query[Credentials].option
 }
